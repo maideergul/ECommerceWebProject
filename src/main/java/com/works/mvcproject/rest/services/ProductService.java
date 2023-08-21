@@ -1,6 +1,8 @@
 package com.works.mvcproject.rest.services;
 
 import java.util.List;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -128,10 +130,14 @@ public class ProductService {
 		productUpdatePush.setImg(img);
 		productUpdatePush.setCid(cid);
 		productUpdatePush.setPstatu(pstatu);
-		productUpdatePush.setQuantity(quantity);
+		productUpdatePush.setQuantity(quantity);		
+		
+		HttpEntity<ProductUpdatePush> request = new HttpEntity<ProductUpdatePush>(productUpdatePush);
 		
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, productUpdatePush, String.class);
+		//ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, productUpdatePush, String.class);	
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
 	}		
 	
 }
