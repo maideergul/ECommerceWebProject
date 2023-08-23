@@ -1,19 +1,29 @@
 package com.works.mvcproject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import lombok.Data;
-
-@Entity
-@Data
 public class Category {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private int cid;		
 	private String categoryname;
 	private String iconPath;
+	public int getCid() {
+		return cid;
+	}
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+	public String getCategoryname() {
+		return categoryname;
+	}
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
+	public String getIconPath() {
+		return iconPath;
+	}
+	public void setIconPath(String iconPath) {
+		this.iconPath = iconPath;
+	}
+	
+	
 
 }

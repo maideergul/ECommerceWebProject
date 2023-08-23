@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.works.mvcproject.models.Category;
 import com.works.mvcproject.models.Product;
 import com.works.mvcproject.rest.models.product.ResultRest;
 import com.works.mvcproject.rest.services.CategoryService;
@@ -40,7 +39,7 @@ public class ProductEditController {
 	}
 
 	@PostMapping("/addProduct")
-	public String productAdd(Product product, Category category,Model model) {
+	public String productAdd(Product product,Model model) {
 		
 		model.addAttribute("categoryList", categoryService.categoryList());
 		if (pid != 0) {
@@ -58,8 +57,8 @@ public class ProductEditController {
 		return "redirect:/productEdit";
 	}	
 	
-	@GetMapping("/deleteProduct/{spid}")
-	public String productDelete(@PathVariable String spid,Model model)
+	@PostMapping("/deleteProduct")
+	public String productDelete(@RequestParam("spid") String spid,Model model)
 	{		
 		model.addAttribute("categoryList", categoryService.categoryList());
 

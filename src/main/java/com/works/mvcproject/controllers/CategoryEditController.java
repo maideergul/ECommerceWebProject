@@ -46,10 +46,11 @@ public class CategoryEditController {
 		return "redirect:/categoryEdit";
 	}
 
-	@GetMapping("/deleteCategory/{scid}")
-	public String productDelete(@PathVariable String scid) {
+	
+	@PostMapping("/deleteCategory")
+	public String deleteCategory(@RequestParam("scid") String scid) {
 
-		try {
+		try {			
 			cid = Integer.parseInt(scid);
 			categoryService.deleteSingle(cid);
 		} catch (NumberFormatException e) {

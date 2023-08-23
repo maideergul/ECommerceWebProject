@@ -1,6 +1,9 @@
 package com.works.mvcproject.rest.services;
 
 import java.util.List;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -44,14 +47,18 @@ public class CategoryService {
 		return result;
 	}
 	
-	public int deleteSingle(int cid)
+	public void deleteSingle(int cid)
 	{
-		String url = "http://localhost:7090/category/deleteSingle?cid="+cid;
-		RestTemplate restTemplate = new RestTemplate();
-		CategoryIntegerResult dataObj = restTemplate.getForObject(url, CategoryIntegerResult.class);
-		int result = dataObj.getResult();
+		String url = "http://localhost:7090/category/deleteSingle";
 		
-		return result;
+		CategoryUpdatePush cat = new CategoryUpdatePush();
+		cat.setCid(cid);
+		
+		HttpEntity<CategoryUpdatePush> request = new HttpEntity<CategoryUpdatePush>(cat);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
 	}
 	
 	public void updateSingle(int cid,String categoryname, String iconPath)
@@ -62,8 +69,10 @@ public class CategoryService {
 		categoryUpdatePush.setCategoryname(categoryname);
 		categoryUpdatePush.setIconPath(iconPath);
 		
+		HttpEntity<CategoryUpdatePush> request = new HttpEntity<CategoryUpdatePush>(categoryUpdatePush);
+		
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, categoryUpdatePush, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
 	}
 	
 	public List<ResultRest> search(String data)

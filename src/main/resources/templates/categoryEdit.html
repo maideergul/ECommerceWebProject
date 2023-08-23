@@ -5,6 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Category Edit</title>
+<script>
+	function user_alert() {
+		var answer = confirm("Are you sure to delete?");
+		return answer;
+	}
+</script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -16,6 +22,10 @@
 				<form action="/addCategory" method="post">
 					<div class="form-group">
 						<input name="categoryname" placeholder="Name" type="text"
+							class="form-control">
+					</div>
+					<div class="form-group">
+						<input name="iconPath" placeholder="IconPath" type="text"
 							class="form-control">
 					</div>
 					<button class="btn btn-success">Save</button>
@@ -34,6 +44,10 @@
 							placeholder="Name" type="text" class="form-control">
 					</div>
 					<br>
+					<div class="form-group">
+						<input th:value="${update.iconPath}" name="iconPath"
+							placeholder="IconPath" type="text" class="form-control">
+					</div> <br>
 					<button class="btn btn-success">Update</button>
 				</form>
 			</div>
@@ -53,6 +67,7 @@
 					<button type="submit" class="btn btn-dark">Search</button>
 				</div>
 			</form>
+
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -66,14 +81,16 @@
 						th:each="item,iter : ${categoryList}">
 						<th th:text="${item.cid}"></th>
 						<td th:text="${item.categoryname}"></td>
-						<td><a th:href="@{'/updateCategory/' + ${item.cid}}"
-							class="btn btn-primary btn-sm btn-block ">Update</a> <a
-							onclick="return user_alert()"
-							th:href="@{'/deleteCategory/' + ${item.cid}}"
-							class="btn btn-danger btn-sm btn-block "> Delete</a></td>
+						<td>
+						<a th:href="@{'/updateCategory/' + ${item.cid}}"
+							class="btn btn-primary btn-sm btn-block ">Update</a>
+							<form action="/deleteCategory" method="post">
+								<button onclick="return user_alert()" class="btn btn-danger btn-sm btn-block" name="scid" th:value="${item.cid}">Delete</button>
+							</form></td>
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
 	</div>
 
